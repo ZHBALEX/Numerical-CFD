@@ -1,0 +1,45 @@
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
+
+# 直接使用您的 Python 列表格式数据
+data = [0,1]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 转换为 NumPy 数组以便处理
+data_np = np.array(data)
+
+# 获取数据的行数和列数
+rows, cols = len(data), len(data[0])
+
+# 创建 x 和 y 的坐标网格
+x = np.linspace(0, cols - 1, cols)
+y = np.linspace(0, rows - 1, rows)
+x, y = np.meshgrid(x, y)
+
+# 创建 3D 图像
+fig = plt.figure()
+ax = fig.add_subplot(111, projection='3d')
+
+# 绘制 3D 表面图
+ax.plot_surface(x, y, data_np, cmap='viridis')
+
+# 设置轴标签
+ax.set_xlabel('X Axis')
+ax.set_ylabel('Y Axis')
+ax.set_zlabel('Z Axis')
+
+# 显示图像
+plt.show()

@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Review of Questions}{2}{}%
+\contentsline {section}{\numberline {2}(1): Simulation, resudual compare}{3}{}%
+\contentsline {subsection}{\numberline {2.1}Jacobi, Gauss-Seidel Iteration, Residual}{3}{}%
+\contentsline {subsection}{\numberline {2.2}Algorithms for Jacobi, G-S, and Residual}{4}{}%
+\contentsline {subsection}{\numberline {2.3}Result and Analysis for (1)}{4}{}%
+\contentsline {subsubsection}{\numberline {2.3.1}Analysis For IGs}{6}{}%
+\contentsline {subsubsection}{\numberline {2.3.2}Analysis For Jacobi and Gauss-Seidel}{6}{}%
+\contentsline {section}{\numberline {3}(2) SOR Method Approach}{7}{}%
+\contentsline {subsection}{\numberline {3.1}SOR Jacobi and SOR Gauss-Sediel}{7}{}%
+\contentsline {subsection}{\numberline {3.2}Find optimal w For constant parameter iteration}{8}{}%
+\contentsline {section}{\numberline {4}(3) SRJ with two parameter relaxization }{10}{}%
+\contentsline {subsection}{\numberline {4.1}Alternative SOR Reach}{10}{}%
+\contentsline {section}{\numberline {5}(4) SRJ reach for three-parameter optimization}{11}{}%
+\contentsline {subsection}{\numberline {5.1}Comparsion-2 Parameters with 3 Parameters(2ws VS 3ws)}{12}{}%
+\contentsline {section}{\numberline {6}Conclusion}{14}{}%
+\contentsline {section}{Appendix}{15}{}%
