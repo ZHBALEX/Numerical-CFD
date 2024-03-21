@@ -1,0 +1,24 @@
+\contentsline {section}{\numberline {1}Question Review}{2}{}%
+\contentsline {section}{\numberline {2}1. Discretized Equation}{3}{}%
+\contentsline {section}{\numberline {3}2. Solver for Computation Domain}{3}{}%
+\contentsline {subsection}{\numberline {3.1}ADI Algortihm}{3}{}%
+\contentsline {subsubsection}{\numberline {3.1.1}ADI Discretization}{3}{}%
+\contentsline {subsubsection}{\numberline {3.1.2}ADI to Tridiagronal Matrix}{4}{}%
+\contentsline {subsubsection}{\numberline {3.1.3}ADI Algorithm}{5}{}%
+\contentsline {subsection}{\numberline {3.2}Solver Structure}{5}{}%
+\contentsline {section}{\numberline {4}3. Vorticity Contour Result}{6}{}%
+\contentsline {subsection}{\numberline {4.1}Result Shown}{6}{}%
+\contentsline {subsection}{\numberline {4.2}Observation}{9}{}%
+\contentsline {subsubsection}{\numberline {4.2.1}Comparsion among time}{9}{}%
+\contentsline {subsubsection}{\numberline {4.2.2}Comparsion of different BC}{9}{}%
+\contentsline {subsubsection}{\numberline {4.2.3}Comparsion of different grid size}{9}{}%
+\contentsline {section}{\numberline {5}4. Vorticity Contour Result at $\mu = 0.001$}{10}{}%
+\contentsline {subsection}{\numberline {5.1}Result shown}{10}{}%
+\contentsline {subsection}{\numberline {5.2}Viscus effect observation}{12}{}%
+\contentsline {subsection}{\numberline {5.3}Oscillation Observation and Analysis}{13}{}%
+\contentsline {section}{\numberline {6}5. Accuracy \& Wavenumber Analysis}{13}{}%
+\contentsline {subsection}{\numberline {6.1}Modified Wavenumber}{13}{}%
+\contentsline {subsection}{\numberline {6.2}Result Analysis with modified wavenumber}{14}{}%
+\contentsline {section}{\numberline {7}6. Effect of Outflow Boundary--Extended Boundary}{14}{}%
+\contentsline {section}{\numberline {8}Conclusion}{16}{}%
+\contentsline {section}{Appendix}{17}{}%

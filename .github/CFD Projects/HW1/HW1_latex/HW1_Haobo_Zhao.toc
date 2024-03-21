@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Question Review}{1}{}%
+\contentsline {section}{\numberline {2}1. Finite Difference for 1D Wave Equations.}{2}{}%
+\contentsline {subsection}{\numberline {2.1}Finite Difference Schemes}{2}{}%
+\contentsline {subsubsection}{\numberline {2.1.1}1st Upwind Scheme}{2}{}%
+\contentsline {subsubsection}{\numberline {2.1.2}2nd Upwind Scheme}{3}{}%
+\contentsline {subsubsection}{\numberline {2.1.3}3rd Upwind Scheme}{3}{}%
+\contentsline {subsubsection}{\numberline {2.1.4}3rd biased Upwind Scheme}{3}{}%
+\contentsline {subsection}{\numberline {2.2}Solver Algorithm}{3}{}%
+\contentsline {subsection}{\numberline {2.3}(i) Result--Solutions for different schemes}{3}{}%
+\contentsline {subsection}{\numberline {2.4}(ii) Exact Solution}{5}{}%
+\contentsline {subsection}{\numberline {2.5}(iii) Modified Wavenumber Curves and Analysis}{5}{}%
+\contentsline {subsubsection}{\numberline {2.5.1}Modified Wavenumbers}{5}{}%
+\contentsline {subsubsection}{\numberline {2.5.2}Curves and Analysis}{6}{}%
+\contentsline {section}{\numberline {3}2. Aliased Analysis with FFT}{7}{}%
+\contentsline {subsection}{\numberline {3.1}}{8}{}%
+\contentsline {section}{Appendix}{9}{}%
