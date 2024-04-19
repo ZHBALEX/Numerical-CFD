@@ -61,123 +61,161 @@ def LineSOR( u,  U, V, u_ex, U_ex, V_ex,r,C):
     u_star = np.copy(u)
     rows = np.size(u,0)
     cols = np.size(u,1)
-    while Res < 1e-6:
-        
+    w = 1.7
+
+    a = np.full(cols, -r/2, dtype = 'float' )
+    b = np.full(cols,1+r,dtype = 'float'  )
+    c = a
+    d = np.full(cols,1+r,dtype = 'float'  )
+    
+    while Res > 1e-6:
         for j in range(1, rows-1):
-            a = np.full(cols, -r/2, dtype = 'float' )
-            b = np.full(cols,1+r,dtype = 'float'  )
-            c = a
-            d = np.full(cols,1+r,dtype = 'float'  )
-        
             for i in range(1,cols-1): # calculate d
-                d2 = 3/2 * C * (U[j,i]*(u[j,i+1]-u[j,i-1])/2) \
-                    + 3/2 * C * (V[j,i]*(u[j+1,i]-u[j-1,i])/2)
-                d3 = 1/2 * C * (U_ex[j,i]*(u_ex[j,i+1]-u_ex[j,i-1])/2) \
-                    + 1/2 * C * (V_ex[j,i]*(u_ex[j+1,i]-u_ex[j-1,i])/2)
+                d2 = 3/2 * C * (U[j,i+1]*u[j,i+1]-U[j,i-1]*u[j,i-1])/2 \
+                    + 3/2 * C * (V[j+1,i]*u[j+1,i]-V[j-1,i]*u[j-1,i])/2
+                
+                d3 = 1/2 * C * (\
+                    U_ex[j,i+1]*u_ex[j,i+1]\
+                        -U[j,i-1]*u_ex[j,i-1]\
+                        )/2 \
+                    + 1/2 * C * (\
+                        V_ex[j,i]*u_ex[j+1,i]\
+                            -V_ex[j-1,i]*u_ex[j-1,i]\
+                                )/2
+                
                 d4 = 1/2 * r * (-4*u[j, i] + u[j+1, i] + u[j-1, i] + u[j, i+1] + u[j, i-1])
-                d[i] = d2 + d3 + d4 - r/2 * (u_star[j+1, i] + u_star[j-1, i] -2*u_star[j, i])
+                d[i] = d2 + d3 + d4 - r/2 * (u_star[j, i+1] + u_star[j, i-1] -2*u_star[j, i])
             u_star[j,:] = TDMA(a,b,c,d)
+
+        u_star[:,:] = (1-w)*u[:,:] + w*u_star[:,:]
         
         Res = 0
 
         # Calculate Residual
         for j in range(1,rows-1):
             for i in range(1,cols-1):
-                d2 = 3/2 * C * (U[j,i]*(u_star[j,i+1]-u_star[j,i-1])/2) \
-                    + 3/2 * C * (V[j,i]*(u_star[j+1,i]-u_star[j-1,i])/2)
-                d3 = 1/2 * C * (U_ex[j,i]*(u_ex[j,i+1]-u_ex[j,i-1])/2) \
-                    + 1/2 * C * (V_ex[j,i]*(u_ex[j+1,i]-u_ex[j-1,i])/2)
+                d2 = 3/2 * C * (U[j,i+1]*u_star[j,i+1]-U[j,i-1]*u_star[j,i-1])/2 \
+                    + 3/2 * C * (V[j+1,i]*u_star[j+1,i]-V[j-1,i]*u_star[j-1,i])/2
+                
+                d3 = 1/2 * C * (U_ex[j,i+1]*u_ex[j,i+1]-U_ex[j,i-1]*u_ex[j,i-1])/2 \
+                    + 1/2 * C * (V_ex[j+1,i]*u_ex[j+1,i]-V_ex[j-1,i]*u_ex[j-1,i])/2
                 d4 = 1/2 * r * (-4*u_star[j, i] + u_star[j+1, i] + u_star[j-1, i] + u_star[j, i+1] + u_star[j, i-1])
                 Res += abs(u_star[j,i]-r/2*(-4*u_star[j,i] + u_star[j+1,i] + u_star[j-1,i] + u_star[j,i+1] + u_star[j,i-1])-d2-d3-d4)
+        print(Res)
     return u_star   
 
-def pGSSOR(p, U_star, V_star, d, dt ):
+
+
+
+def pLineSOR(p, U_star, V_star, d, dt ):
         rows = np.size(p,0)
         cols = np.size(p,1)
         k = d/dt
+        w = 1.7
 
         Res = 100
         p_star = np.copy(p)
-        while Res < 1e-6:
+
+        a = np.full(cols, 1, dtype = 'float' )
+        b = np.full(cols,-2,dtype = 'float'  )
+        c = a
+        d = np.full(cols,1,dtype = 'float'  )
+
+        
+        while Res > 1e-6:
             for j in range(1, rows-1):
-
-                a = np.full(cols, 1, dtype = 'float' )
-                b = np.full(cols,-2,dtype = 'float'  )
-                c = a
-                d = np.full(cols,1,dtype = 'float'  )
-            
                 for i in range(1,cols-1): # calculate d
-
                     d1 = k*(U_star[j,i+1]-U_star[j,i]+V_star[j+1,i]-V_star[j,i])
-                    d2 = -(p[j+1,i]+p[j-1,i]-2*p[j,i])
+                    d2 = -(p[j,i+1]+p[j,i-1]-2*p[j,i])
                     d[i] = d1+d2
                 p_star[j,:] = TDMA(a,b,c,d)
+            
+            p_star = (1-w)*p + w*p_star
             
             Res = 0
 
             # Calculate Residual
             for j in range(1,rows-1):
                 for i in range(1,cols-1):
-                    d2 = 3/2 * C * (U[j,i]*(u_star[j,i+1]-u_star[j,i-1])/2) \
-                        + 3/2 * C * (V[j,i]*(u_star[j+1,i]-u_star[j-1,i])/2)
-                    d3 = 1/2 * C * (U_ex[j,i]*(u_ex[j,i+1]-u_ex[j,i-1])/2) \
-                        + 1/2 * C * (V_ex[j,i]*(u_ex[j+1,i]-u_ex[j-1,i])/2)
-                    d4 = 1/2 * r * (-4*u_star[j, i] + u_star[j+1, i] + u_star[j-1, i] + u_star[j, i+1] + u_star[j, i-1])
-                    Res += abs(u_star[j,i]-r/2*(-4*u_star[j,i] + u_star[j+1,i] + u_star[j-1,i] + u_star[j,i+1] + u_star[j,i-1])-d2-d3-d4)
-        return u_star 
+                    d1 = k*(U_star[j,i+1]-U_star[j,i]+V_star[j+1,i]-V_star[j,i])
+                    d2 = -(p_star[j,i+1]+p_star[j,i-1]-2*p_star[j,i])
+                    Res += abs((-4*p_star[j,i] + p_star[j+1,i] + p_star[j-1,i] + p_star[j,i+1] + p_star[j,i-1])-d1)
+            print(Res)
+        return p_star 
         
     
 
-def solver(Re, u, v, p,  U, V, N, t, d, dt):
-    t_steps = t/dt
+def solver(Re, u, v, p,  U, V, t, d, dt):
+    t_steps = int(t/dt)
     
     u_ex, v_ex = np.copy(u), np.copy(v)
+    U_ex, V_ex = np.copy(U), np.copy(V)
     
     for n in range(0, t_steps):
         U, V = BC(U,V)
+        
 
-        u_star, v_starm, U_star, V_star = \
+        u_star, v_star, U_star, V_star = \
+            np.copy(u), np.copy(v), np.copy(U), np.copy(V)
+        
+        u_new, v_new, U_new, V_new = \
             np.copy(u), np.copy(v), np.copy(U), np.copy(V)
         
         # step 1
         r = dt/Re/d**2
         c = dt/d
+
+        
     
         u_star = LineSOR( u,  U, V, u_ex, U_ex, V_ex,r, c)
         v_star = LineSOR( v,  U, V, v_ex, U_ex, V_ex,r, c)
 
-        for j in range(0,len(np.size(U,0))):
-            for i in range(1, np.size(U,1)-1):\
+        for j in range(0,np.size(U,0)):
+            for i in range(1, np.size(U,1)-1):
                 U_star[j,i] = ( u_star[j,i-1] + u_star[j,i] )/2
         
-        for j in range(1,len(np.size(V,0))-1):
-            for i in range(0, np.size(V,1)):\
+        for j in range(1,np.size(V,0)-1):
+            for i in range(0, np.size(V,1)):
                 V_star[j,i] = ( v_star[j-1,i] + v_star[j,i] )/2
         
         # step 2
         
-        p_new = pGSSOR(p, U_star, V_star, d, dt )
+        p_new = pLineSOR(p, U_star, V_star, d, dt )
+
+        
         
         
         # step 3
-        u_new[j, i] = u_star - dt/dx*(p[]-p[])
+        u_new = np.copy(u_star)
+        for j in range(1,np.size(u,0)-1):
+            for i in range(1, np.size(u,1)-1):
+                u_new[j, i] = u_star[j,i] - dt/d*(p[j,i+1]-p[j,i-1])/2
+                v_new[j, i] = v_star[j,i] - dt/d*(p[j+1,i]-p[j-1,i])/2
+        
+        for j in range(0,np.size(U,0)):
+            for i in range(1, np.size(U,1)-1):
+                U_new[j,i] = U_star[j,i] - dt/d * (p[j,i]-p[j,i-1])
+
+        for j in range(1,np.size(V,0)-1):
+            for i in range(0, np.size(V,1)):
+                V_new[j,i] = V_star[j,i] - dt/d * (p[j,i]-p[j-1,i])
+
         u_ex, v_ex, U_ex, V_ex = u, v, U, V
-    
-        
-        
-        
-        
-        
-        
-    pass
+        u, v, U, V = u_new, v_new, U_new, V_new
+
+        print(n)
+
+    return u,v,U,V
+
+
 
 
 
 def main():
     x_len = 1
     y_len = 1
-    N = 4 # grid cell number, Np = Nx * Ny
-    Re = 100
+    N = 16 # grid cell number, Np = Nx * Ny
+    Re = 1
     
     dt = 0.001
     d = x_len/N
@@ -191,12 +229,8 @@ def main():
     u,v, U, V = init(u, v, U, V)
     U, V = BC(U, V)
     p = np.copy(u)
-    
-    
-    
-    print(V)
-    
-    
+
+    u,v,U,V = solver(Re, u, v, p,  U, V, t, d, dt)
     
     
     
@@ -218,8 +252,10 @@ def main():
     
     
     
-    print(1)
-    pass
+    
+    
+    
+    print("YOU WING")
     
     
     
