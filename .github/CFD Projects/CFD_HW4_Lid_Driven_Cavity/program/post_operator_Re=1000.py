@@ -3,27 +3,21 @@ import re
 import matplotlib.pyplot as plt
 
 def load_2d_arrays_with_numpy(label):
-    import os
-    import sys
-
-    # 将工作目录改变到脚本所在目录
-    os.chdir(os.path.dirname(os.path.abspath(__file__)))
-
-    filename = f'data/Re1000_output_N={label}.txt'
+    filename = f'Re1000_output_N={label}.txt'
     try:
         with open(filename, 'r') as file:
             content = file.read()
     except FileNotFoundError:
-        print("文件未找到,请检查文件路径是否正确")
+        print("文件未找到，请检查文件路径是否正确")
         return None, None, None
 
     # 辅助函数来提取并构建二维数组
     def extract_2d_array(array_content):
         array_data = []
-        # 匹配方括号内的所有内容,包括可能的多行
+        # 匹配方括号内的所有内容，包括可能的多行
         matches = re.findall(r'\[(.*?)]', array_content.replace('\n', ''), re.DOTALL)
         for match in matches:
-            # 替换掉可能存在的换行符,然后解析数值
+            # 替换掉可能存在的换行符，然后解析数值
             formatted_match = ' '.join(match.split())
             numbers = np.fromstring(formatted_match, sep=' ')
             array_data.append(numbers)
@@ -97,10 +91,10 @@ def drawing_x_c(u_x_c_16, u_x_c_64, u_x_c_128):
     y_64 = np.linspace(0,1, 64)
     y_128 = np.linspace(0,1, 128)
     plt.figure(figsize=(8, 8))
-    plt.plot( ue_x_c_vertical, ye, 'X', label='Reference', color= '#0072B2')
-    plt.plot( u_x_c_16,y_16, '*', label='N_16',color= '#56B4E9')
-    plt.plot( u_x_c_64,y_64, '+', label='N_64',color= '#D55E00')
-    plt.plot( u_x_c_128,y_128, '-', label='N_128',color= '#CC79A7')
+    plt.plot( ue_x_c_vertical, ye, '-x', label='Paper Result', color= 'red')
+    plt.plot( u_x_c_16,y_16, '-x', label='Result_16',color= 'blue')
+    plt.plot( u_x_c_64,y_64, '-x', label='Result_64',color= 'green')
+    plt.plot( u_x_c_128,y_128, '-', label='Result_128',color= 'navy')
     plt.xlabel('Y')
     plt.ylabel('u velocity')
     plt.legend()
@@ -119,10 +113,10 @@ def drawing_y_c(v_y_c_16, v_y_c_64, v_y_c_128):
     x_64 = np.linspace(0,64*1/64, 64)
     x_128 = np.linspace(0,128*1/128, 128)
 
-    plt.plot(xe, ue_y_c_vertical, 'X', label='Reference',color= '#0072B2')
-    plt.plot(x_16, v_y_c_16, '*', label='N_16',color= '#56B4E9')
-    plt.plot(x_64, v_y_c_64, '+', label='N_64',color= '#D55E00')
-    plt.plot(x_128, v_y_c_128, '-', label='N_128',color= '#CC79A7')
+    plt.plot(xe, ue_y_c_vertical, '-x', label='Paper Result',color= 'red')
+    plt.plot(x_16, v_y_c_16, '-x', label='Result_16',color= 'blue')
+    plt.plot(x_64, v_y_c_64, '-x', label='Result_64',color= 'green')
+    plt.plot(x_128, v_y_c_128, '-', label='Result_128',color= 'navy')
     plt.xlabel('X')
     plt.ylabel('v velocity')
     plt.legend()
@@ -174,6 +168,8 @@ if __name__ == '__main__':
     main()
 
     
+
+
 
 
 

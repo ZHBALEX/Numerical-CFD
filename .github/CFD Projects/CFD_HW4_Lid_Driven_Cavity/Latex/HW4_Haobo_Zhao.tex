@@ -123,6 +123,15 @@
 \title{\begin{Huge}Lid Driven Cavity Problem\end{Huge}\\Haobo Zhao\\530.767 CFD-HW4}
 \maketitle
 
+In this project, we developed a N-S solver for Lid Driven Cavity problem, which use $2^{nd}$ order central difference scheme in space and a second order (AB2 for convection and CN2 for viscous) fractional step in time. By separate update of the face velocity (“semi-staggered”  approach), we could approach zero divergence with the compact stencil for pressure. We also used ghost point method to obtain boundary condition. By compare our result with the reference result, we could say our result is robust.
+
+
+
+
+
+
+
+
 \tableofcontents
 
 
@@ -147,12 +156,14 @@
 
 % \noindent
 % u = v = 0
-\newpage
 \section{Question Review}
 \begin{center}
     \includegraphics[width=0.6\linewidth]{figures/Question_grid.jpg}
 \end{center}
-Consider the \( 1 \times 1 \) cavity shown above. The cavity has a lid that moves to the right with unit velocity. This ``driven cavity'' problem is considered a benchmark in CFD and is often used to validate the fidelity and accuracy of Navier-Stokes solvers. Accurate solutions to this problem have been obtained by a number of researchers. One often quoted work in this area is that of Ghia et al. (\textit{Journal of Computational Physics}, Vol. 48, page 387, 1982). Others include Botella, O. and Peyret, R., 1998. Benchmark spectral results on the lid-driven cavity flow. \textit{Computers \& Fluids}, 27(4), pp.421-433.
+Consider the \( 1 \times 1 \) cavity shown above. The cavity has a lid that moves to the right with unit velocity. This ``driven cavity'' problem is considered a benchmark in CFD and is often used to validate the fidelity and accuracy of Navier-Stokes solvers. Accurate solutions to this problem have been obtained by a number of researchers. One often quoted work in this area is that of Ghia et al. (\textit{Journal of Computational Physics}, Vol. 48, page 387, 1982)\cite{GHIA1982387}. Others include Botella, O. and Peyret, R., 1998. Benchmark spectral results on the lid-driven cavity flow. \textit{Computers \& Fluids}, 27(4), pp.421-433.\cite{BOTELLA1998421}\\
+
+
+
 
 With this HW, you will start developing the code that you will also use for the Final Project
 
@@ -165,7 +176,8 @@ With this HW, you will start developing the code that you will also use for the 
 \end{enumerate}
 
 
-
+% \cite{GHIA1982387}
+% \cite{BOTELLA1998421}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -230,7 +242,7 @@ which is:
     = 
     -\frac{3}{2} \underbrace{[\Delta t \nabla \cdot (\vec{U}^n \vec{u}^{n})]}_{(2)} 
     + \frac{1}{2} \underbrace{[\Delta t  \nabla \cdot (\vec{U}^{n-1} \vec{u}^{n-1})]}_{(3)} 
-    +\underbrace{[1+ \frac{\Delta t}{2Re} \nabla^{2} \vec{u}]}_{(4)}
+    +\underbrace{[1+ \frac{\Delta t}{2Re} \nabla^{2}] \vec{u}}_{(4)}
 \end{equation}
 
 Could say, (2), (3) are convection term, and (4) is the diffusion term of the eqaution. 
@@ -239,7 +251,7 @@ Could use this equation to update $u^*$, $v^*$.\\
 
 Where,
 \begin{align*}
-    (1) &= \left\{ 1 - \frac{\Delta t}{Re} \nabla^2 \right\} u^{*} = P^{*} - \left[\frac{E^{*} + W^{*} - 2P^*}{\Delta x^{2}} + \frac{N^{*} + S^{*} - 2P^*}{\Delta y^{2}}\right] \frac{\Delta t}{Re} \\
+    (1) &= \left\{ 1 - \frac{\Delta t}{2Re} \nabla^2 \right\} u^{*} = P^{*} - \left[\frac{E^{*} + W^{*} - 2P^*}{\Delta x^{2}} + \frac{N^{*} + S^{*} - 2P^*}{\Delta y^{2}}\right] \frac{\Delta t}{2Re} \\
     (2) &= \frac{\Delta t}{\Delta} \left((U_{e}^{n} \frac{ E^{n} + P^{n}}{2} - U_{w}^{n} \frac{ W^{n} + P^{n}}{2}) + (V_{n}^{n} \frac{ N^{n} + P^{n}}{2} - V_{s}^{n} \frac{ S^{n} + P^{n}}{2}) \right) \\
     (3) &= \frac{\Delta t}{\Delta} \left((U_{e}^{n-1} \frac{ E^{n-1} + P^{n-1}}{2} - U_{w}^{n-1} \frac{ W^{n-1} + P^{n-1}}{2}) + (V_{n}^{n-1} \frac{ N^{n-1} + P^{n-1}}{2} - V_{s}^{n-1} \frac{ S^{n-1} + P^{n-1}}{2}) \right) \\
     (4) &= P^n + \frac{\Delta t}{2 Re \Delta^2} \left( E^{n} + W^{n} + N^{n} + S^{n} - 4P^{n} \right)
@@ -449,7 +461,7 @@ Solve this system, we could get $u^*$, and $v^*$\\
 
 
 \textbf{Update $U^*, V^*$:}\\
-    $$ U_e^* = \frac{u_p^*+u_E^*}{2} , V_n^* = \frac{v_p^*+v_N^*}{2}$$
+    $$ U_e^* = \frac{u_p^*+u_E^*}{2} , V_n^* = \frac{v_P^*+v_N^*}{2}$$
 
 
 \subsubsection{Step (II):}
@@ -460,11 +472,11 @@ $$
 $$
 
 $$
-\frac{P_E + P_W - 2P_P}{\Delta x^2} + \frac{P_N + P_S - 2P_P}{\Delta y^2} = \frac{\frac{U_e^* - U_P^*}{\Delta x} + \frac{V_n^* - V_s^*}{\Delta y}}{\Delta t}
+\frac{P_E + P_W - 2P_P}{\Delta x^2} + \frac{P_N + P_S - 2P_P}{\Delta y^2} = \frac{\frac{U_e^* - U_w^*}{\Delta x} + \frac{V_n^* - V_s^*}{\Delta y}}{\Delta t}
 $$
 
 $$
-P_E + P_W + P_N + P_S - 4P_P = \frac{\Delta}{\Delta t} \left( U_e^* - U_P^* + V_n^* - V_s^* \right) = RHS
+P_E + P_W + P_N + P_S - 4P_P = \frac{\Delta}{\Delta t} \left( U_e^* - U_w^* + V_n^* - V_s^* \right) = RHS
 $$
 
 Similarly, this equation also give us a pentadiagonal system:
@@ -854,10 +866,37 @@ $$
 
 
 
-\subsection{Solver}
+
 
 
 \subsection{Solver Architecture}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Homeworks/HW4-Lid_Driven_Cavity/Latex/figures/Solver/Solver_Architecture.jpg}
+    \caption{Solver Architecture}
+\end{figure}
+
+
+This diagram shows our Solver structure. By Using grid generator to generate fields for $u, v, p$, and $U, V$, transfer the data to initialize the initial value, then use the main loop to doing time iteration till the fields get to steady state, we could output the result. \\
+
+\begin{itemize}
+    \item \textbf{I/O}: I means function input, and O means function output.
+    \item \textbf{Data Transfer Lines}: The diagram uses different colored lines to indicate various types of data movement, while the lines with arrow means one-way data transfer, which means value assignment, and the lines without arrow means data exchange, where there is data input to function, but there is also data get back from function.
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -911,22 +950,21 @@ the vortex at left bottom is not showing,
 
 \subsection{Result comparison to the reference}
 
-To prove the soundability of our result, we compare the result with the reference (Ghia et al, 1982). The results is showing below:
+To make our result is robust, we compare the result with the reference (Ghia et al, 1982)\cite{GHIA1982387}. The results is showing below:
 
 \subsubsection{Streamline comparison}
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{Homeworks/HW4-Lid_Driven_Cavity/Latex/figures/Re=100_result/Compare.jpg}
-    \caption{Stream line: N=16 (upper left), N=32 (upper right), 
-    N=64 (down left), N=128 (down right)}
+    \caption{left: Result Streamline, right: Ghia(1982)\cite{GHIA1982387}'s result}
 \end{figure}
 
-Compare out N=128 result to the Gaha (1982) 's result, we could find the results is similar, where the three vortex repersent, and the stream lines similiar.
+Compare out N=128 result to the Ghia (1982)\cite{GHIA1982387} 's result, we could find the results is similar, where the there shows three vortex, and the stream lines are similar.
 
 \subsubsection{Velocity at geometry center}
 
 
-Measure our result's accuracy need us to compare the result with the reference (Ghia et al. 1982). By compare the result at geometry center, we could check the accuracy of our result. 
+Measure our result's accuracy need us to compare the result with the reference (Ghia et al. 1982)\cite{GHIA1982387}. By compare the result at geometry center, we could check the accuracy of our result. 
 
 
 
@@ -959,7 +997,7 @@ We use the the horizontal velocity u at horizontal center (at same vertical line
     \includegraphics[width=0.5\linewidth]{figures/u along verticle line through geometric center.png}
     \hspace{-8mm} % Reduce horizontal space
     \includegraphics[width=0.5\linewidth]{figures/v along horizontal line through geometric center.png }
-    \caption{u along verticle line at middle of x (left), v along horizontal line at middle of y (right). There is also enlarged figures showing down below.}
+    \caption{u along vertical line at middle of x (left), v along horizontal line at middle of y (right). Reference is Ghia (1982)\cite{GHIA1982387}'s result. There is also enlarged figures showing down below.}
 \end{figure}
 
 
@@ -972,7 +1010,7 @@ We use the the horizontal velocity u at horizontal center (at same vertical line
     \caption{u along vertical line at middle of x (large)}
 \end{figure}
 
-This figures shows velocity u at the horizontal middle of the domain. Could say, in general the result is matching. Also compare different grid size, could find the coarset grid, N=16, biased largest from reference result. Conversely, the finest grid, N=128, match pretty good.
+This figures shows velocity u at the horizontal middle of the domain. Could say, in general the result is matching. Also compare different grid size, could find the coarsest grid, N=16, biased largest from reference result. Conversely, the finest grid, N=128, match pretty good.
 
 
 \begin{figure}[H]
@@ -987,7 +1025,7 @@ This figures shows velocity u at the horizontal middle of the domain. Could say,
 
 
 Could find in these solution, that the N = 16 grid is the most rough grid, where the difference with the paper result (N=128) is the largest.
-The finist grid (N=128) us the most accurate grid, where the result match the result from paper.  
+The finest grid (N=128) us the most accurate grid, where the result match the result from paper.  
 
 As the grid become finer, the result become more accurate.
 
@@ -1055,7 +1093,7 @@ more obvious at the finer grid.
 
 \subsubsection{Velocity at geometry center}
 
-Measure our result's accuracy need us to compare the result with the reference (Ghia et al. 1982). By compare the result at geometry center, we could check the accuracy of our result. 
+Measure our result's accuracy need us to compare the result with the reference (Ghia et al. 1982)\cite{GHIA1982387}. By compare the result at geometry center, we could check the accuracy of our result. 
 
 
 \begin{figure}[H]
@@ -1119,8 +1157,7 @@ We also have very similar observation on the vertical velocity v on the vertical
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\linewidth]{Homeworks/HW4-Lid_Driven_Cavity/Latex/figures/Re=1000_result/Re=1000_Compare.jpg}
-    \caption{Stream line: N=16 (upper left), N=32 (upper right), 
-    N=64 (down left), N=128 (down right)}
+    \caption{left: Result Streamline, right: Ghia(1982)\cite{GHIA1982387}'s result}
 \end{figure}
 
 Could say the results are matching, where the vortex location and the shape are similar.
@@ -1221,7 +1258,10 @@ Could say the results are matching, where the vortex location and the shape are 
 
 
 
-
+\bibliographystyle{plain}
+\bibliography{ref}
+% \cite{GHIA1982387}
+% \cite{BOTELLA1998421}
 
 
 
@@ -1236,7 +1276,8 @@ Could say the results are matching, where the vortex location and the shape are 
 \addcontentsline{toc}{section}{Appendix}
 \begin{scriptsize}
 
-\begin{lstlisting}[language=python,caption={ADI Solver}]
+Our basic Solver code is showing below:
+\begin{lstlisting}[language=python,caption={Lid Driven Cavity Solver}]
 # This solver is a new attempt using same size of u, U... , 
 # keep updating ghost point and dont need to change formula
 
@@ -1627,26 +1668,164 @@ if __name__ == '__main__':
 
 
 
-\begin{lstlisting}[language=python,caption={ADI Solver}]
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
+\begin{lstlisting}[language=python,caption={Post Operator:}]
+import numpy as np
+import re
+import matplotlib.pyplot as plt
+
+def load_2d_arrays_with_numpy(label):
+    filename = f'output_N={label}.txt'
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+    except FileNotFoundError:
+        print("文件未找到，请检查文件路径是否正确")
+        return None, None, None
+
+    # 辅助函数来提取并构建二维数组
+    def extract_2d_array(array_content):
+        array_data = []
+        # 匹配方括号内的所有内容，包括可能的多行
+        matches = re.findall(r'\[(.*?)]', array_content.replace('\n', ''), re.DOTALL)
+        for match in matches:
+            # 替换掉可能存在的换行符，然后解析数值
+            formatted_match = ' '.join(match.split())
+            numbers = np.fromstring(formatted_match, sep=' ')
+            array_data.append(numbers)
+        return np.array(array_data)
+
+    # 改进正则表达式以匹配整个数组块
+    u_data = re.search(r'Array u:\s*((?:\[\s*.*?\s*\][,\s]*)+)', content, re.DOTALL)
+    v_data = re.search(r'Array v:\s*((?:\[\s*.*?\s*\][,\s]*)+)', content, re.DOTALL)
+    p_data = re.search(r'Array p:\s*((?:\[\s*.*?\s*\][,\s]*)+)', content, re.DOTALL)
+
+    if not (u_data and v_data and p_data):
+        print("未能正确提取u, v, 或 p的数据。请检查数组标记和文件格式。")
+        return np.array([]), np.array([]), np.array([])
+
+    u = extract_2d_array(u_data.group(1))
+    v = extract_2d_array(v_data.group(1))
+    p = extract_2d_array(p_data.group(1))
+
+    return u, v, p
+
+def smalluvp(u,v,p):
+    return u[1:-1,1:-1],v[1:-1,1:-1],p[1:-1,1:-1] 
+
+def Center(u,v,p, label):
+    u,v,p = smalluvp(u,v,p)
+    
+    center = int(label/2)
+    u_x_center = (u[:,center] + u[:,center-1])/2
+    v_x_center = (v[:,center] + v[:,center-1])/2
+    p_x_center = (p[:,center] + p[:,center-1])/2
+
+    u_y_center = (u[center,:] + u[center-1,:])/2
+    v_y_center = (v[center,:] + v[center-1,:])/2
+    p_y_center = (p[center,:] + p[center-1,:])/2
+
+    return u_x_center, v_x_center, p_x_center\
+    ,u_y_center, v_y_center, p_y_center
+
+
+# def drawing(u_x_c, u_y_c):
     
     
+def get_ue_x_c():
+    ye_0 = [1.00000, 0.9766, 0.9688, 0.9609, 0.9531, 0.8516, 0.7344, 0.6172, 0.5000, 0.4531, 0.2813, 0.1719, 0.1016, 0.0703, 0.0625, 0.0547, 0.0000]
+    ue_x_c_0 = [1.00000, 0.84123, 0.78871, 0.73722, 0.68717, 0.23151, 0.00332, -0.13641, -0.20581, -0.21090, -0.15662, -0.10150, -0.06434, -0.04775, -0.04192, -0.03717, 0.00000]
+    return ye_0[::-1], ue_x_c_0[::-1]
+
+def get_ue_y_c():
+    xe_0 = [1.0000, 0.9688, 0.9609, 0.9531, 0.9453, 0.9063, 0.8594, 0.8047, 0.5000, 0.2344, 0.2266, 0.1563, 0.0938, 0.0781, 0.0703, 0.0625, 0.0000]
+    xe_y_c_0 = [0.00000, -0.05906, -0.07391, -0.08864, -0.10313, -0.16914, -0.22445, -0.24533, 0.05454, 0.17527, 0.17507, 0.16077, 0.12317, 0.10890, 0.10091, 0.09233, 0.00000]
+    return xe_0[::-1], xe_y_c_0[::-1]
+
+
+# def drawing(u_x_c_16, u_x_c_64, u_x_c_128):
+#     ye, ue_x_c = get_ue_x_c()
+#     y = np.linspace(0,N*1/N, N)
+#     plt.figure(figsize=(8, 8))
+#     plt.plot(ye, ue_x_c, label='Paper Result')
+#     plt.plot(y, u_x_c, label='Result')
+#     plt.xlabel('X')
+#     plt.ylabel('u velocity')
+#     plt.legend()
+#     # plt.title('u Contour')
+#     # plt.savefig(f'u_contour_{label}.png')
+#     plt.show()
+
+
+def drawing_x_c(u_x_c_16, u_x_c_64, u_x_c_128):
+    ye, ue_x_c_vertical = get_ue_x_c()
+    y_16 = np.linspace(0,1, 16)
+    y_64 = np.linspace(0,1, 64)
+    y_128 = np.linspace(0,1, 128)
+    plt.figure(figsize=(8, 8))
+    plt.plot( ue_x_c_vertical, ye, '-x', label='Paper Result', color= 'red')
+    plt.plot( u_x_c_16,y_16, '-x', label='Result_16',color= 'blue')
+    plt.plot( u_x_c_64,y_64, '-x', label='Result_64',color= 'green')
+    plt.plot( u_x_c_128,y_128, '-', label='Result_128',color= 'navy')
+    plt.xlabel('Y')
+    plt.ylabel('u velocity')
+    plt.legend()
+    plt.title('u along verticle line through geometric center')
+    plt.savefig('u along verticle line through geometric center')
+    # plt.show()
+
+
+
     
+
+def drawing_y_c(v_y_c_16, v_y_c_64, v_y_c_128):
+    xe, ue_y_c_vertical = get_ue_y_c()
+    plt.figure(figsize=(12,12))
+    x_16 = np.linspace(0,16*1/16, 16)
+    x_64 = np.linspace(0,64*1/64, 64)
+    x_128 = np.linspace(0,128*1/128, 128)
+
+    plt.plot(xe, ue_y_c_vertical, '-x', label='Paper Result',color= 'red')
+    plt.plot(x_16, v_y_c_16, '-x', label='Result_16',color= 'blue')
+    plt.plot(x_64, v_y_c_64, '-x', label='Result_64',color= 'green')
+    plt.plot(x_128, v_y_c_128, '-', label='Result_128',color= 'navy')
+    plt.xlabel('X')
+    plt.ylabel('v velocity')
+    plt.legend()
+    plt.title('v along horizontal line through geometric center')
+    plt.savefig('v along horizontal line through geometric center')
+    # plt.show()
+
+
+def center_get(N):
+    u, v, p = load_2d_arrays_with_numpy(N)
+    return Center(u,v,p, N)
+
+
+
+
+
+
+
+
+def main():
+    # 使用示例
+    # N = 128
+    # u, v, p = load_2d_arrays_with_numpy(N)
+    # print(u[-2,:])
+    # u_x_c, v_x_c, p_x_c, u_y_c, v_y_c, p_y_c = Center(u,v,p, N)
+
+    u_x_c_128, v_x_c_128, p_x_c_128, u_y_c_128, v_y_c_128, p_y_c_128 = center_get(128)
+    u_x_c_64, v_x_c_64, p_x_c_64, u_y_c_64, v_y_c_64, p_y_c_64 = center_get(64)
+    u_x_c_16, v_x_c_16, p_x_c_16, u_y_c_16, v_y_c_16, p_y_c_16 = center_get(16)
+
+    # drawing_x_c(u_x_c_16, u_x_c_64, u_x_c_128)
+    # drawing_y_c(v_y_c_16, v_y_c_64, v_y_c_128)
+
+
+
+if __name__ == '__main__':
+    main()
+
     
 
 
@@ -1655,72 +1834,6 @@ print(2)
 
 
 
-
-
-
-
-
-
-
-\begin{lstlisting}[language=python,caption={ADI Solver}]
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-    
-    
-    
-    
-
-
-\end{lstlisting}
-
-
-
-
-
-
-
-
-
-
-
-\begin{lstlisting}[language=python,caption={ADI Solver}]
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-print(1)
-print(2)
-    
-    
-    
-    
-
-
-\end{lstlisting}
 
 
 

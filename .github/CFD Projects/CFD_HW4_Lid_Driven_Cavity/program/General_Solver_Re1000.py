@@ -353,17 +353,17 @@ def save(u,v,p,label):
 
 
 def main():
-    N = 16
+    N = 64
     t = 20
 
 
 
-    dt = 0.01
+    dt = 0.001
 
     len_x = 1
     len_y = 1
     Nx = Ny = N
-    Re = 1000
+    Re = 2000
 
     u, v, U, V, p, dx = general_grid_generator(len_x, Nx, Ny)
 

@@ -28,7 +28,7 @@ def general_grid_generator(len_x, Nx, Ny):
     # Creating same size of u, v, U, V
     # where col 0, row 0, row -1, of U not used
     # where row 0, col 0, col -1, of V not used
-    initial_Value = 0.01
+    initial_Value = 0.0
 
     dx = len_x/Nx
     grid = np.full((Nx+2, Ny+2), initial_Value)
