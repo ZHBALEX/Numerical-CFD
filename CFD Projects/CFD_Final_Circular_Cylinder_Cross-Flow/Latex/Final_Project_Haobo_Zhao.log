@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.26)  10 MAY 2024 00:33
+This is pdfTeX, Version 3.141592653-2.6-1.40.26 (TeX Live 2024) (preloaded format=pdflatex 2024.4.26)  10 MAY 2024 01:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/Users/haobozhao/Documents/GitHub/Working/Homeworks/Final_Project/Latex/Final_Project_Haobo_Zhao.tex
-(/Users/haobozhao/Documents/GitHub/Working/Homeworks/Final_Project/Latex/Final_Project_Haobo_Zhao.tex
+**"/Users/haobozhao/Documents/GitHub/Numerical-CFD/CFD Projects/CFD_Final_Circular_Cylinder_Cross-Flow/Latex/Final_Project_Haobo_Zhao.tex"
+(/Users/haobozhao/Documents/GitHub/Numerical-CFD/CFD Projects/CFD_Final_Circular_Cylinder_Cross-Flow/Latex/Final_Project_Haobo_Zhao.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-02-20>
 (/usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
@@ -2121,14 +2121,14 @@ Package rerunfilecheck Info: File `Final_Project_Haobo_Zhao.out' has not changed
  ) 
 Here is how much of TeX's memory you used:
  29951 strings out of 474116
- 545690 string characters out of 5743682
+ 545794 string characters out of 5743682
  2534187 words of memory out of 5000000
  50981 multiletter control sequences out of 15000+600000
  626915 words of font info for 188 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,11n,131p,1003b,2243s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,11n,131p,1039b,2243s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/NewTXMI.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/NewTXMI7.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/txexas.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/txexs.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/txmiaX.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/public/newtx/txsys.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplb8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplr8a.pfb></usr/local/texlive/2024/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
-Output written on Final_Project_Haobo_Zhao.pdf (56 pages, 13599039 bytes).
+Output written on Final_Project_Haobo_Zhao.pdf (56 pages, 13599043 bytes).
 PDF statistics:
  1726 PDF objects out of 1728 (max. 8388607)
  1476 compressed objects within 15 object streams

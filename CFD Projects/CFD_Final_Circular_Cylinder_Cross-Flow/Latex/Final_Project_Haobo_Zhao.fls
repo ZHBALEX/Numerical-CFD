@@ -1,8 +1,8 @@
-PWD /Users/haobozhao/Documents/GitHub/Working/Homeworks/Final_Project/Latex
+PWD /Users/haobozhao/Documents/GitHub/Numerical-CFD/CFD Projects/CFD_Final_Circular_Cylinder_Cross-Flow/Latex
 INPUT /usr/local/texlive/2024/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/haobozhao/Documents/GitHub/Working/Homeworks/Final_Project/Latex/Final_Project_Haobo_Zhao.tex
+INPUT /Users/haobozhao/Documents/GitHub/Numerical-CFD/CFD Projects/CFD_Final_Circular_Cylinder_Cross-Flow/Latex/Final_Project_Haobo_Zhao.tex
 OUTPUT Final_Project_Haobo_Zhao.log
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2024/texmf-dist/tex/latex/base/article.cls
