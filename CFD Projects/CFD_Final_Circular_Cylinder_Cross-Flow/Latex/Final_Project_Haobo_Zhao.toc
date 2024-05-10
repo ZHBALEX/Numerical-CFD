@@ -1,0 +1,78 @@
+\contentsline {section}{\numberline {1}Question Review}{4}{section.1}%
+\contentsline {section}{\numberline {2}N-S Solver}{6}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Discretization of N-S Equation}{6}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Step (I):}{6}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Step (II):}{7}{subsubsection.2.1.2}%
+\contentsline {subsubsection}{\numberline {2.1.3}Step (III):}{8}{subsubsection.2.1.3}%
+\contentsline {subsubsection}{\numberline {2.1.4}LineSOR implementation}{8}{subsubsection.2.1.4}%
+\contentsline {subsection}{\numberline {2.2}Immersed Boundary Method}{9}{subsection.2.2}%
+\contentsline {subsubsection}{\numberline {2.2.1}Coefficient Correction}{9}{subsubsection.2.2.1}%
+\contentsline {subsection}{\numberline {2.3}Solver field Setting}{11}{subsection.2.3}%
+\contentsline {subsection}{\numberline {2.4}Solver Architecture}{12}{subsection.2.4}%
+\contentsline {section}{\numberline {3}Solver Testing--Uniform and Channel Case}{13}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Uniform flow}{13}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Channel Flow}{13}{subsection.3.2}%
+\contentsline {subsubsection}{\numberline {3.2.1}Flow setting}{13}{subsubsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.2}Result}{14}{subsubsection.3.2.2}%
+\contentsline {subsubsection}{\numberline {3.2.3}Comparison with theoretical solution}{15}{subsubsection.3.2.3}%
+\contentsline {section}{\numberline {4}Re=150--Circular cylinder in a cross-flow}{16}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Settings}{16}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Result among time}{16}{subsection.4.2}%
+\contentsline {subsubsection}{\numberline {4.2.1}t=10 and t=50}{16}{subsubsection.4.2.1}%
+\contentsline {subsubsection}{\numberline {4.2.2}t=50 and t=100}{17}{subsubsection.4.2.2}%
+\contentsline {subsubsection}{\numberline {4.2.3}Result Comparison of time (t=10, 50, and 100)}{19}{subsubsection.4.2.3}%
+\contentsline {subsection}{\numberline {4.3}Re=150 Result Value and Comparison}{20}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Drag ($c_D$) and Lift ($c_L$) coefficient)}{20}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Vortex Shedding frequency}{20}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Result value compare with literature}{21}{subsubsection.4.3.3}%
+\contentsline {section}{\numberline {5}Influence of Domain Size: $ 8 \times 4 $ VS. $ 8 \times 2 $}{22}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Result Comparison among time }{22}{subsection.5.1}%
+\contentsline {subsubsection}{\numberline {5.1.1}t=50 and t=100 comparison}{22}{subsubsection.5.1.1}%
+\contentsline {subsection}{\numberline {5.2}Drag ($c_D$) and Lift ($c_L$) coefficient)}{23}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Vortex Shedding frequency}{23}{subsubsection.5.2.1}%
+\contentsline {subsection}{\numberline {5.3}Comparison of domain size $8 \times 4$ with $8 \times 2$}{23}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Influence of Grid Resolution: $\Delta $=1/32 VS. $\Delta $=1/16}{25}{section.6}%
+\contentsline {subsection}{\numberline {6.1}$\Delta $=1/32 VS. $\Delta $=1/16 at different time }{25}{subsection.6.1}%
+\contentsline {subsubsection}{\numberline {6.1.1}t=50}{25}{subsubsection.6.1.1}%
+\contentsline {subsubsection}{\numberline {6.1.2}t=100}{26}{subsubsection.6.1.2}%
+\contentsline {subsection}{\numberline {6.2}Drag ($c_D$) and Lift ($c_L$) coefficient)}{27}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}Vortex Shedding frequency}{27}{subsubsection.6.2.1}%
+\contentsline {subsection}{\numberline {6.3}Result comparison of grid resolution: 1/32 and 1/16}{28}{subsection.6.3}%
+\contentsline {section}{\numberline {7}Re=300 Result}{29}{section.7}%
+\contentsline {subsection}{\numberline {7.1}Re=300 VS. Re=150 at different time }{29}{subsection.7.1}%
+\contentsline {subsubsection}{\numberline {7.1.1}t=50}{29}{subsubsection.7.1.1}%
+\contentsline {subsubsection}{\numberline {7.1.2}t=100}{30}{subsubsection.7.1.2}%
+\contentsline {subsection}{\numberline {7.2}Re=300 Result Value and Comparison}{31}{subsection.7.2}%
+\contentsline {subsubsection}{\numberline {7.2.1}Drag ($c_D$) and Lift ($c_L$) coefficient}{31}{subsubsection.7.2.1}%
+\contentsline {subsubsection}{\numberline {7.2.2}Vortex Shedding frequency}{31}{subsubsection.7.2.2}%
+\contentsline {subsubsection}{\numberline {7.2.3}Result value compare with literature}{31}{subsubsection.7.2.3}%
+\contentsline {section}{\numberline {8}Re=1000 Result}{32}{section.8}%
+\contentsline {subsection}{\numberline {8.1}Re=1000 VS. Re=150 at different time }{32}{subsection.8.1}%
+\contentsline {subsubsection}{\numberline {8.1.1}t=50}{32}{subsubsection.8.1.1}%
+\contentsline {subsubsection}{\numberline {8.1.2}t=100}{33}{subsubsection.8.1.2}%
+\contentsline {subsection}{\numberline {8.2}Re=1000 Result Value and Comparison}{34}{subsection.8.2}%
+\contentsline {subsubsection}{\numberline {8.2.1}Drag ($c_D$) and Lift ($c_L$) coefficient}{34}{subsubsection.8.2.1}%
+\contentsline {subsubsection}{\numberline {8.2.2}Vortex Shedding frequency}{35}{subsubsection.8.2.2}%
+\contentsline {subsubsection}{\numberline {8.2.3}Result value compare with literature}{35}{subsubsection.8.2.3}%
+\contentsline {subsection}{\numberline {8.3}Comparison and discussion of Re number effect on result}{35}{subsection.8.3}%
+\contentsline {subsubsection}{\numberline {8.3.1}$C_D$ and $C_L $ comparison}{35}{subsubsection.8.3.1}%
+\contentsline {subsubsection}{\numberline {8.3.2}Comparison among time}{35}{subsubsection.8.3.2}%
+\contentsline {section}{\numberline {9}Re=300, Elliptic cylinder}{38}{section.9}%
+\contentsline {subsection}{\numberline {9.1}Elliptic Setting}{38}{subsection.9.1}%
+\contentsline {subsection}{\numberline {9.2}t=50 and t=100}{39}{subsection.9.2}%
+\contentsline {subsubsection}{\numberline {9.2.1}Comparison among time (t=5, 10, 50, 100)}{40}{subsubsection.9.2.1}%
+\contentsline {subsection}{\numberline {9.3}Elliptic Result Value and Comparison}{41}{subsection.9.3}%
+\contentsline {subsubsection}{\numberline {9.3.1}Drag ($c_D$) and Lift ($c_L$) coefficient}{41}{subsubsection.9.3.1}%
+\contentsline {subsubsection}{\numberline {9.3.2}Vortex Shedding frequency}{41}{subsubsection.9.3.2}%
+\contentsline {section}{\numberline {10}Discussion and Conclusion}{42}{section.10}%
+\contentsline {subsection}{\numberline {10.1}Review of the result}{42}{subsection.10.1}%
+\contentsline {subsubsection}{\numberline {10.1.1}Re=150, domain size= $8 \times 4$, grid resolution $\Delta = 1/32$}{42}{subsubsection.10.1.1}%
+\contentsline {subsubsection}{\numberline {10.1.2}Re=150, domain size= $8 \times 2$, grid resolution $\Delta = 1/32$}{42}{subsubsection.10.1.2}%
+\contentsline {subsubsection}{\numberline {10.1.3}Re=150, domain size= $8 \times 4$, grid resolution $\Delta = 1/16$}{42}{subsubsection.10.1.3}%
+\contentsline {subsubsection}{\numberline {10.1.4}Re=300, domain size= $8 \times 4$, grid resolution $\Delta = 1/32$}{42}{subsubsection.10.1.4}%
+\contentsline {subsubsection}{\numberline {10.1.5}Re=1000, domain size= $8 \times 4$, grid resolution $\Delta = 1/32$}{42}{subsubsection.10.1.5}%
+\contentsline {subsubsection}{\numberline {10.1.6}Elliptic Case: Re=300, domain size= $8 \times 4$, grid resolution $\Delta = 1/32$}{43}{subsubsection.10.1.6}%
+\contentsline {subsection}{\numberline {10.2}Result and Observation}{43}{subsection.10.2}%
+\contentsline {subsection}{\numberline {10.3}Discussion}{43}{subsection.10.3}%
+\contentsline {subsection}{\numberline {10.4}Conclusion}{44}{subsection.10.4}%
+\contentsline {section}{Appendix}{45}{subsection.10.4}%
